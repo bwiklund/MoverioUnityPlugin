@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 [AddComponentMenu("Moverio/MoverioCameraController")]
@@ -85,6 +85,10 @@ public class MoverioCameraController : MonoBehaviour {
 		case MoverioDisplayType.Display3D:
 			LeftEyeCam.enabled = RightEyeCam.enabled = true;
 			Cam2D.enabled = false;
+			float aspect = 1.7778f;
+			float fov = 22f / aspect;
+			LeftEyeCam.aspect      = RightEyeCam.aspect      = aspect;
+			LeftEyeCam.fieldOfView = RightEyeCam.fieldOfView = fov;
 			break;
 		}
 	}
