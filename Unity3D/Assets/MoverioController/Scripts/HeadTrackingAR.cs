@@ -19,7 +19,6 @@ public class HeadTrackingAR : MonoBehaviour
 	Gyroscope _head;
 	Quaternion _callibration;
 	Transform _t;
-	GameObject HeadTracker;
 	
 	float yO = 0.0f;
 
@@ -28,7 +27,6 @@ public class HeadTrackingAR : MonoBehaviour
 		_instance = this;
 	}
 
-
 	
 	void Start()
 	{
@@ -36,11 +34,7 @@ public class HeadTrackingAR : MonoBehaviour
 
 		yO = _t.position.y;
 
-		HeadTracker = new GameObject("HeadTracker");
-		HeadTracker.transform.position = transform.position;
-		transform.parent = HeadTracker.transform;
-		_gyroIsAvailable = Input.isGyroAvailable;
-
+		_gyroIsAvailable = SystemInfo.supportsGyroscope;
 		
 		if (_gyroIsAvailable) 
 		{		
@@ -53,17 +47,13 @@ public class HeadTrackingAR : MonoBehaviour
 
 	
 	void Update()
-	{			
-		
-		
-		HeadTracker.transform.eulerAngles = new Vector3(90,180,0);
+	{
+		transform.eulerAngles = new Vector3(90,180,0);
 		_callibration = Quaternion.Euler(new Vector3(0,0,180));
 		
 		if (_gyroIsAvailable) 
 		{
-			_t.localRotation = Quaternion.Slerp(transform.localRotation, Input.gyro.attitude * _callibration, Time.deltaTime*30);
+			_t.localRotation = Input.gyro.attitude * _callibration;//Quaternion.Slerp(transform.localRotation, Input.gyro.attitude * _callibration, Time.deltaTime*30);
 		}
-
-
 	}
 }
